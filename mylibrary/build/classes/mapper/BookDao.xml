@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.BookDao">
+	<resultMap type="Bookinfo" id="bookinfo">
+		<!-- 一对一关联 -->
+		<!-- 一个书对应一种类别 -->
+		<result column="book_id" property="book_id"/>
+		<result column="name" property="name"/>
+		<result column="author" property="author"/>
+		<result column="publish" property="publish"/>
+		<result column="ISBN" property="ISBN"/>
+		<result column="introduction" property="introduction"/>
+		<result column="language" property="language"/>
+		<result column="price" property="price"/>
+		<result column="pubdate" property="pubdate"/>
+		<result column="stock" property="stock"/>
+	 	<!--property中是Bookinfo类中的Category变量名 category  -->
+		<association  javaType="Category" property="category">
+			<result column="cid" property="cid"/>
+			<result column="cname" property="cname"/>
+		</association>
+	</resultMap>
+	<select id="listAllBook"  resultMap="bookinfo" parameterType="PageBean">
+		<!-- 根据条件查询 图书的所有信息 -->
+		SELECT a.book_id,
+		a.name,
+		a.author,
+		a.publish,
+		a.ISBN,
+		a.introduction,
+		a.language,
+		a.price,
+		a.pubdate,
+		a.class_id cid,
+		b.cname,
+		a.stock,
+		a.state from book_info a left join class_info b on a.class_id=b.cid
+		<where>
+		<if test="bname!=null and bname!=''">
+    	and a.name like '%${bname}%'
+		</if>
+		<if test="author!=null and author!=''">
+    	and a.author like '%${author}%'
+		</if>
+		<if test="cname!=null and cname!=''">
+    	and b.cname like '%${cname}%'
+		</if>
+		</where>
+		<if test="currentPage!=null and currentPage!=''">
+    	limit #{index}, #{pageSize}
+		</if>
+	</select>
+	
+	<!-- 查询条数 -->
+	<select id="bookCount" parameterType="PageBean" resultType="Integer">
+		select COUNT(*) FROM book_info a left join class_info b on a.class_id=b.cid
+		<where>
+		<if test="bname!=null and bname!=''">
+    	and a.name like '%${bname}%'
+		</if>
+		<if test="author!=null and author!=''">
+    	and a.author like '%${author}%'
+		</if>
+		<if test="cname!=null and cname!=''">
+    	and b.cname like '%${cname}%'
+		</if>
+		</where>
+	</select>
+	<!-- 查询类别 -->
+	<select id="listCategory"  resultType="Category">
+		select cid,cname FROM  class_info 
+	</select>
+	
+	<!-- 修改图书 -->
+	<select id="updateBook" parameterType="Bookinfo" >
+	UPDATE  book_info SET name=#{name},
+	author=#{author},
+	publish=#{publish},
+	ISBN=#{ISBN},
+	introduction=#{introduction},
+	language=#{language},
+	price=#{price},
+	pubdate=#{pubdate2},
+	class_id=#{class_id},
+	stock=#{stock} 
+	where book_id=#{book_id}
+	</select>
+	<!-- 添加图书 -->
+	<select id="addBook" parameterType="Bookinfo" >
+		INSERT INTO book_info(
+		book_id,
+		name,
+		author,
+		publish,
+		ISBN,
+		introduction,
+		language,
+		price,
+		pubdate,
+		class_id,
+		stock
+		) VALUES(#{book_id},#{name},#{author},#{publish},#{ISBN},#{introduction},#{language},#{price},#{pubdate2},#{class_id},#{stock})
+	</select>
+	
+	<!-- 添加图书 -->
+	<select id="delBook" parameterType="Integer" >
+		DELETE from  book_info WHERE book_id=#{book_id}
+	</select>
+	<!-- 修改图书类别 -->
+	<select id="updateBookType" parameterType="Category" >
+	UPDATE  class_info SET cname=#{cname}
+	where cid=#{cid}
+	</select>
+	<!-- 添加图书类别 -->
+	<select id="addBookType" parameterType="Category" >
+	INSERT INTO  class_info(cname) VALUES(#{cname})
+	</select>
+	<!-- 删除图书类别 -->
+	<select id="delBookType" parameterType="Category" >
+	delete from  class_info where cid=#{cid}
+	</select>
+</mapper>

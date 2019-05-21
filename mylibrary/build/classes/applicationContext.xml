@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+
+
+	<context:property-placeholder location="classpath:db.properties"/>
+	<!-- 配置  扫描   @Service -->
+	<context:component-scan base-package="service"/>
+	<!-- 数据库连接池 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+		<!-- 驱动 -->
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<!-- url -->
+		<property name="url" value="${jdbc.url}" />
+		<!-- 用户名 -->
+		<property name="username" value="${jdbc.username}" />
+		<!-- 密码 -->
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	
+	<!-- Mybatis的工厂 -->
+	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<!-- 核心配置文件的位置 -->
+		<property name="configLocation" value="classpath:sqlMapConfig.xml"/>
+	</bean>
+	
+	<!-- Dao原始Dao -->
+<!-- 	<bean id="userDao" class="dao.UserDaoImpl"> -->
+<!-- 		<property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/> -->
+<!-- 	</bean> -->
+	<!-- Mapper动态代理开发 -->
+<!-- 	<bean id="userMapper" class="mapper.MapperFactoryBean"> -->
+<!-- 		<property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/> -->
+<!-- 		<property name="mapperInterface" value="mapper.UserMapper"/> -->
+<!-- 	</bean> -->
+	
+	<!-- Mapper动态代理开发   扫描 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- 基本包 -->
+		<property name="basePackage" value="mapper"/>
+	</bean>
+	
+	
+	
+	
+	
+	<!-- 事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<!-- 数据源 -->
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- 通知 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- 传播行为 -->
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="insert*" propagation="REQUIRED" />
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="create*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="find*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="select*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="get*" propagation="SUPPORTS" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+	<!-- 切面 -->
+	<aop:config>
+		<aop:advisor advice-ref="txAdvice"
+			pointcut="execution(* service.*.*(..))" />
+	</aop:config>
+	
+	
+	
+	
+
+</beans>

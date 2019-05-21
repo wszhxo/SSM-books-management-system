@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>mylibrary</display-name>
+  <welcome-file-list>
+    <welcome-file>login.jsp</welcome-file>
+ 
+  </welcome-file-list>
+  
+  
+  <!-- 上下文的位置 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+	<!-- Spring的监听器 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+
+	<!-- POST提交过滤器 UTF-8 -->
+	<filter>
+		<filter-name>encoding</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>encoding</filter-name>
+		<url-pattern>*.action</url-pattern>
+	</filter-mapping>
+	<!-- 前端控制器 -->
+	<servlet>
+		<servlet-name>Mylibrary</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<!-- 此处不配置 默认找 /WEB-INF/[servlet-name]-servlet.xml -->
+			<param-value>classpath:springmvc.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Mylibrary</servlet-name>
+		<!-- 1:*.do *.action 拦截以.do结尾的请求 (不拦截 jsp png jpg .js .css) 2:/ 拦截所有请求 
+			（不拦截.jsp) 建议使用此种 方式 （拦截 .js.css .png) (放行静态资源） 3:/* 拦截所有请求（包括.jsp) 此种方式 不建议使用 -->
+		<url-pattern>*.action</url-pattern>
+	</servlet-mapping>
+  
+  
+</web-app>

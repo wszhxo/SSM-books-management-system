@@ -13,10 +13,13 @@ public class PageBean {
 	private Integer totalPage;
 	// 起始索引
 	private Integer index;
-	// 搜索条件
+	// 图书搜索条件
 	private String bname;// 书名字
 	private String author;// 作者
 	private String cname;// 类别
+	//读者搜索条件
+	private String reader_id;// 作者
+	private String rname;// 类别
 	
 	public PageBean() {
 		
@@ -120,11 +123,24 @@ public class PageBean {
 	public void setIndex(Integer index) {
 		this.index = index;
 	}
+	public String getReader_id() {
+		return reader_id;
+	}
+	public void setReader_id(String reader_id) {
+		this.reader_id = reader_id;
+	}
+	public String getRname() {
+		return rname;
+	}
+	public void setRname(String rname) {
+		this.rname = rname;
+	}
+	
 	@Override
 	public String toString() {
 		return "PageBean [currentPage=" + currentPage + ", totalCount=" + totalCount + ", pageSize=" + pageSize
 				+ ", totalPage=" + totalPage + ", index=" + index + ", bname=" + bname + ", author=" + author
-				+ ", cname=" + cname + "]";
+				+ ", cname=" + cname + ", reader_id=" + reader_id + ", rname=" + rname + "]";
 	}
 	
 	

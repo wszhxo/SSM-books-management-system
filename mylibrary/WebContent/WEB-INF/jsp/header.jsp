@@ -36,7 +36,7 @@
       <li class="layui-nav-item">
         <a href="javascript:;">读者管理</a>
         <dl class="layui-nav-child">
-          <dd><a href="">读者列表</a></dd>
+          <dd><a href="<%=basePath%>readerIndex.action">读者列表</a></dd>
           <dd><a href="">分类管理</a></dd>
         </dl>
       </li>

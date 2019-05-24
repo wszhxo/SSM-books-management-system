@@ -104,7 +104,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		) VALUES(#{book_id},#{name},#{author},#{publish},#{ISBN},#{introduction},#{language},#{price},#{pubdate2},#{class_id},#{stock})
 	</select>
 	
-	<!-- 添加图书 -->
+	<!-- 删除图书 -->
 	<select id="delBook" parameterType="Integer" >
 		DELETE from  book_info WHERE book_id=#{book_id}
 	</select>

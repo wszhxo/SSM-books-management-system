@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.ReaderDao">
+	<!-- 查询 -->
+	<resultMap type="Readers" id="readers">
+		<result column="reader_id" property="reader_id"/>
+		<result column="name" property="name"/>
+		<result column="sex" property="sex"/>
+		<result column="birth" property="birth"/>
+		<result column="address" property="address"/>
+		<result column="telcode" property="telcode"/>
+		<result column="card_state" property="card_state"/>
+	</resultMap>
+	<select id="findReader"  resultMap="readers" parameterType="PageBean">
+		<!-- 根据条件查询 读者的所有信息 -->
+			select 
+			reader_id,
+			name,
+			sex,
+			birth,
+			address,
+			telcode,
+			card_state
+			from
+			reader_info 
+		<where>
+		<if test="reader_id!=null and reader_id!=''">
+    	and reader_id like '%${reader_id}%'
+		</if>
+		<if test="rname!=null and rname!=''">
+    	and name like '%${rname}%'
+		</if>
+		</where>
+		<if test="currentPage!=null and currentPage!=''">
+    	limit #{index}, #{pageSize}
+		</if>
+	</select>
+	
+	<!-- 查询条数 -->
+	<select id="readerCount" parameterType="PageBean" resultType="Integer">
+		select COUNT(*) FROM reader_info 
+		<where>
+		<if test="reader_id!=null and reader_id!=''">
+    	and reader_id like '%${reader_id}%'
+		</if>
+		<if test="rname!=null and rname!=''">
+    	and name like '%${rname}%'
+		</if>
+		</where>
+	</select>
+	
+	<!-- 修改图书 -->
+	<select id="updateReader" parameterType="Readers" >
+	UPDATE  reader_info SET 
+			name=#{name},
+			sex=#{sex},
+			birth=#{birth2},
+			address=#{address},
+			telcode=#{telcode},
+			card_state=#{card_state}
+	where reader_id=#{reader_id}
+	</select>
+	<!-- 添加图书 -->
+	<select id="addReader" parameterType="Readers" >
+		INSERT INTO reader_info(
+			reader_id,
+			name,
+			sex,
+			birth,
+			address,
+			telcode,
+			card_state
+		) VALUES(#{reader_id},#{name},#{sex},#{birth2},#{address},#{telcode},#{card_state})
+	</select>
+	
+	<!-- 删除读者 -->
+	<select id="delReader" parameterType="Integer" >
+		DELETE from  reader_info WHERE reader_id=#{reader_id}
+	</select>
+</mapper>

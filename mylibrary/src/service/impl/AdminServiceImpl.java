@@ -15,7 +15,7 @@ public class AdminServiceImpl implements AdminService{
 
 	@Override
 	public Admin login(Admin admin) {
-		return adminDao.login(admin);
+		return admin.getAccess()=="0"?adminDao.login(admin):adminDao.readerLogin(admin);
 	}
 	
 

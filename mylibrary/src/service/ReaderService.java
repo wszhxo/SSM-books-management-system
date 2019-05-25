@@ -22,4 +22,6 @@ public interface ReaderService {
 	//查询读者
 	List<Readers> findReader(PageBean pageBean);
 	PageBean getPb();
+	
+	int checkReader(Integer reader_id);
 }

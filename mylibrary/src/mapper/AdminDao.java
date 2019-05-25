@@ -3,5 +3,6 @@ package mapper;
 import pojo.Admin;
 
 public interface AdminDao {
-	public Admin login(Admin admin);
+	Admin login(Admin admin);
+	Admin readerLogin(Admin admin);
 }

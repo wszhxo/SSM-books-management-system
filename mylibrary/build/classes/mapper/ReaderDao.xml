@@ -51,7 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</where>
 	</select>
 	
-	<!-- 修改图书 -->
+	<!-- 修改读者 -->
 	<select id="updateReader" parameterType="Readers" >
 	UPDATE  reader_info SET 
 			name=#{name},
@@ -62,7 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			card_state=#{card_state}
 	where reader_id=#{reader_id}
 	</select>
-	<!-- 添加图书 -->
+	<!-- 添加读者 -->
 	<select id="addReader" parameterType="Readers" >
 		INSERT INTO reader_info(
 			reader_id,
@@ -71,12 +71,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			birth,
 			address,
 			telcode,
-			card_state
-		) VALUES(#{reader_id},#{name},#{sex},#{birth2},#{address},#{telcode},#{card_state})
+			card_state,
+			password
+		) VALUES(#{reader_id},#{name},#{sex},#{birth2},#{address},#{telcode},#{card_state},#{password})
 	</select>
 	
 	<!-- 删除读者 -->
 	<select id="delReader" parameterType="Integer" >
 		DELETE from  reader_info WHERE reader_id=#{reader_id}
+	</select>
+	<!-- 是否存在读者 -->
+	<select id="checkReader" resultType="Integer"  parameterType="Integer">
+		select count(*) from  reader_info WHERE reader_id=#{reader_id}
 	</select>
 </mapper>

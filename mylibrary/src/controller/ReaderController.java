@@ -94,8 +94,17 @@ public class ReaderController {
 	}
 	//删除
 	@RequestMapping(value = "library/delReader")
-	public  @ResponseBody String delreader(@RequestParam(value = "id") Integer id) {
+	public  @ResponseBody String delreader( Integer id) {
 		 readerService.delReader(id);
 		 return "1";
+	}
+	
+	//注册是查询是否存在该读者
+	@RequestMapping(value = "library/checkUser")
+	public  @ResponseBody String checkreader( Integer reader_id) {
+		System.out.println(reader_id);
+		 int a=readerService.checkReader(reader_id);
+		 System.out.println(a);
+		 return a>0?"0":"1";
 	}
 }

@@ -14,6 +14,13 @@ public class Readers implements Serializable{
 	private String address;
 	private String telcode;//电话
 	private Integer card_state;//读者等级
+	private String password="123456";//默认密码
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	public Integer getReader_id() {
 		return reader_id;
 	}

@@ -54,5 +54,9 @@ public class ReaderServiceImpl implements ReaderService{
 	public int readerCount(PageBean pageBean) {
 		return readerDao.readerCount(pageBean);
 	}
+	@Override
+	public int checkReader(Integer reader_id) {
+		return readerDao.checkReader(reader_id);
+	}
 
 }

@@ -28,10 +28,19 @@
             <input type="password" name="password" required lay-verify="required" placeholder="密码" autocomplete="off"
                    class="layui-input">
         </div>
+         <div class="layui-input-inline">
+			   	<select name="access" id="access" lay-verify="required">
+				  <option value="">请选择权限</option>
+				  	<option value="0" >管理员</option>
+				  	<option value="1" >读者</option>
+				</select> 
+    	</div>
+        
         <div class="layui-input-inline login-btn">
             <button lay-submit lay-filter="login" class="layui-btn">登录</button>
         </div>
         <hr/>
+        <p><a href="register.jsp" class="fl">立即注册</a><a href="javascript:;" onclick="forgetpsw();" class="fr">忘记密码？</a></p>
     </form>
 </div>
  
@@ -43,6 +52,7 @@
         // 操作对象
         var form = layui.form;
         var $ = layui.jquery;
+       
         form.on('submit(login)',function (data) {
             $.ajax({
                 url:'<%=basePath%>library/list.action',
@@ -50,8 +60,10 @@
                 dataType:'text',
                 type:'post',
                 success:function (data) {
-                    if (data == '1'){
+                    if (data == '0'){
                         location.href = "<%=basePath%>index.action";
+                    }else if (data == '1') {
+                    	 location.href = "<%=basePath%>frontIndex.action";
                     }else{
                         layer.msg('登录名或密码错误');
                     }
@@ -59,8 +71,10 @@
             })
             return false;
         })
- 
     });
+	 	function forgetpsw(){
+       	 layer.msg('联系管理员(15146731391)或到图书馆进行重置');
+      	}
 </script>
 </body>
 </html>

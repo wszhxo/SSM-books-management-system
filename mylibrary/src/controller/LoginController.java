@@ -16,22 +16,26 @@ import service.AdminService;
 public class LoginController {
 	@Autowired
 	private AdminService adminService;
-	
-	
-	//用于跳转,ajax返回成功跳转到index.jsp
+	//用于跳转,ajax返回成功跳转到管理员界面index.jsp
 	@RequestMapping(value = "/index")
 	public String login() {
 		return "index";
+	}
+	//读者借阅界面readerIndex.jsp
+	@RequestMapping(value = "/frontIndex")
+	public String login2() {
+		return "frontIndex";
 	}
 	
 	//ajax请求过来
 	@RequestMapping(value = "/library/list")
 	public  @ResponseBody
-		String list(Admin admin,Model model){	
+		String list(Admin admin,Model model){
 		Admin admin2=adminService.login(admin);
 		model.addAttribute("admin2",admin2);
 		//返回视图index.jsp
-		return admin2==null? "0":"1";
+		//权限标志0或1
+		return admin.getAccess();
 		
 	}
 	

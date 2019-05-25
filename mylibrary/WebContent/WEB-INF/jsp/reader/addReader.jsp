@@ -30,9 +30,8 @@
  <div class="layui-form-item">
  
     <div class="layui-inline">
-      <label class="layui-form-label">读者ID：</label>
+      <label class="layui-form-label">借阅号(学号)：</label>
       <div class="layui-input-inline">
-      <!--  隐藏域-->
       <input type="text" name="reader_id"  value="${readerinfo.reader_id}" lay-verify="required" autocomplete="off" class="layui-input">
       </div>
     </div>

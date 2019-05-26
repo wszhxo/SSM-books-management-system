@@ -64,6 +64,8 @@
                         location.href = "<%=basePath%>index.action";
                     }else if (data == '1') {
                     	 location.href = "<%=basePath%>frontIndex.action";
+                    }else if (data == '2'){
+                    	layer.msg('请选择正确的权限');
                     }else{
                         layer.msg('登录名或密码错误');
                     }

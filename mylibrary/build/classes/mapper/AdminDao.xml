@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<!-- 读者登录 -->
 	<select id="readerLogin" parameterType="Admin" resultType="Admin">
-		select reader_id as adminId,password,name  
+		select reader_id as adminId,password,name ,card_state as access 
 		FROM reader_info where reader_id=#{adminId}  and password=#{password} 
 	</select>
 </mapper>

@@ -16,4 +16,6 @@ public interface BookDao {
 	public void updateBookType(Category category);
 	public void addBookType(Category category);
 	public void delBookType(Category category);
+	//减少库存
+	public void reduceStock();
 }

@@ -121,4 +121,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="delBookType" parameterType="Category" >
 	delete from  class_info where cid=#{cid}
 	</select>
+	<!-- 减少图书库存 -->
+	<select id="reduceStock" parameterType="Bookinfo" >
+	UPDATE  book_info SET stock=stock-1
+	where book_id=#{book_id}
+	</select>
+	
 </mapper>

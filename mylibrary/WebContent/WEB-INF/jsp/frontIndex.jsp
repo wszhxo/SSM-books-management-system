@@ -54,7 +54,7 @@
       <div id="pageDemo"></div>
     </div>
 <script type="text/html" id="barDemo">
-  <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="lend">借阅</a>
+  <a  class="layui-btn layui-btn-danger layui-btn-sm lend" lay-event="lend">借阅</a>
 </script>
 <script>
 //JavaScript代码区域
@@ -142,26 +142,56 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
     ,layEvent = obj.event; //获得 lay-event 对应的值
     if(layEvent === 'lend'){
       layer.confirm('确认借阅此书吗?', function(index){
-    	  lend(data.book_id,obj,index);
+    	  lend(obj,index,data);
       });
     }
   });
 //后边两个参数仅仅是因为要执行动态删除dom
-function lend(id,obj,index){
-	
+function lend(obj,index,data1){
 	$.ajax({
-        url:'<%=basePath%>library/lendBook.action?id='+id,
-        dataType:'text',
+        url:'<%=basePath%>library/lendBook.action?'
+			  +'book_id='+data1.book_id
+			  +'&name='+data1.name
+			  +'&author='+data1.author
+			  +'&publish='+data1.publish
+			  +'&ISBN='+data1.ISBN
+			  +'&introduction='+data1.introduction
+			  +'&language='+data1.language
+			  +'&price='+data1.price
+			  +'&pubdate2='+data1.pubdate//这里赋值给String类型的时间字段
+			  +'&class_id='+data1.category.cid
+			  +'&stock='+data1.stock,
+       	dataType: 'text',
         type:'post',
         success:function (data) {
             if (data == '1'){
-            	 obj.del(); //删除对应行（tr）的DOM结构
-                 layer.close(index);
+            	 
+            	//当前行数
+             	var i =$("tr").index(obj.tr)-1;
+            	//获取当前dom
+            	var dom = $('.lend').eq(i);
+            	if(dom.hasClass('layui-btn-danger')){
+            		dom.removeClass('layui-btn-danger');
+            		dom.addClass('layui-btn-normal');
+            		dom.html('取消借阅');
+            	}else{
+            		dom.removeClass('layui-btn-normal');
+            		dom.addClass('layui-btn-danger');
+            		dom.html('借阅');
+            	}
+            	//更新库存
+            	obj.update({
+            		stock: data1.stock-1
+            	    });
+            	layer.close(index);
+            	
             }else{
                 layer.msg('库存不足');
             }
         }
     })
+    
+    
 }
 });
 

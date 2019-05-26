@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.BorrowDao">
+<!-- 	<resultMap type="LeadInfo" id="leadInfo"> -->
+ <!-- 一对一关联  -->
+<!-- 		<result column="fine" property="fine"/> -->
+<!-- 		<result column="lend_date" property="lend_date"/> -->
+<!-- 		<result column="back_date" property="back_date"/> -->
+<!-- 		<result column="state" property="state"/> -->
+<!--   	 	property中是Bookinfo类中的Category变量名 category   --> 
+<!-- 		<association  javaType="Bookinfo" property="bookinfo"> -->
+<!-- 			<result column="book_id" property="book_id"/> -->
+<!-- 			<result column="name" property="name"/> -->
+<!-- 			<result column="author" property="author"/> -->
+<!-- 			<result column="publish" property="publish"/> -->
+<!-- 			<result column="ISBN" property="ISBN"/> -->
+<!-- 			<result column="introduction" property="introduction"/> -->
+<!-- 			<result column="language" property="language"/> -->
+<!-- 			<result column="price" property="price"/> -->
+<!-- 			<result column="pubdate" property="pubdate"/> -->
+<!-- 			<result column="stock" property="stock"/> -->
+<!-- 		</association> -->
+<!-- 		<association  javaType="Admin" property="admin"> -->
+<!-- 			<result column="reader_id" property="adminId"/> -->
+<!-- 			<result column="name" property="name"/> -->
+<!-- 			<result column="password" property="password"/> -->
+<!-- 		</association> -->
+<!-- 	</resultMap> -->
+
+	<!-- 添加借阅记录 -->
+	<select id="addLead" parameterType="leadInfo" >
+		INSERT into lend_list(
+		book_id,
+		reader_id,
+		lend_date,
+		back_date,
+		state,
+		fine
+		)
+		VALUES(
+		#{book_id},#{adminId},#{lend_date},#{back_date},#{state},#{fine}
+		)
+	</select>
+	
+</mapper>

@@ -3,9 +3,6 @@ package pojo;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 public class Bookinfo implements Serializable {
 	private Integer book_id;// 书本编号

@@ -26,8 +26,8 @@
     <div class="layui-logo">ZHX图书借阅系统</div>
     <!-- 头部区域（可配合layui已有的水平导航） -->
     <ul class="layui-nav layui-layout-left">
-        <li class="layui-nav-item"><a href="<%=basePath%>readerIndex.action">图书列表</a></li>
-        <li class="layui-nav-item"><a href="">未还图书</a></li>
+        <li class="layui-nav-item"><a href="<%=basePath%>frontIndex.action">图书列表</a></li>
+        <li class="layui-nav-item"><a href="<%=basePath%>listDisBack.action">未还图书</a></li>
          <li class="layui-nav-item"><a href="">已还图书</a></li>
     </ul>
     <ul class="layui-nav layui-layout-right">

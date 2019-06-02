@@ -1,7 +1,5 @@
 package pojo;
 
-import java.util.List;
-
 public class PageBean {
 	// 当前页数
 	private Integer currentPage;
@@ -20,9 +18,18 @@ public class PageBean {
 	//读者搜索条件
 	private String reader_id;// 作者
 	private String rname;// 类别
-	
+	private Integer adminId;
 	public PageBean() {
-		
+
+	}
+
+
+	public Integer getAdminId() {
+		return adminId;
+	}
+
+	public void setAdminId(Integer adminId) {
+		this.adminId = adminId;
 	}
 	public PageBean(Integer currentPage, Integer totalCount, Integer pageSize) {
 		this.totalCount = totalCount;
@@ -135,13 +142,21 @@ public class PageBean {
 	public void setRname(String rname) {
 		this.rname = rname;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "PageBean [currentPage=" + currentPage + ", totalCount=" + totalCount + ", pageSize=" + pageSize
-				+ ", totalPage=" + totalPage + ", index=" + index + ", bname=" + bname + ", author=" + author
-				+ ", cname=" + cname + ", reader_id=" + reader_id + ", rname=" + rname + "]";
+		return "PageBean{" +
+				"currentPage=" + currentPage +
+				", totalCount=" + totalCount +
+				", pageSize=" + pageSize +
+				", totalPage=" + totalPage +
+				", index=" + index +
+				", bname='" + bname + '\'' +
+				", author='" + author + '\'' +
+				", cname='" + cname + '\'' +
+				", reader_id='" + reader_id + '\'' +
+				", rname='" + rname + '\'' +
+				", adminId=" + adminId +
+				'}';
 	}
-	
-	
 }

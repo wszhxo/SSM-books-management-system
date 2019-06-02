@@ -1,15 +1,14 @@
 package service.impl;
 
-import java.util.List;
-
+import mapper.BookDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import mapper.BookDao;
 import pojo.Bookinfo;
 import pojo.Category;
 import pojo.PageBean;
 import service.BookService;
+
+import java.util.List;
 @Service
 public class BookServiceImpl implements BookService{
 
@@ -67,4 +66,10 @@ public class BookServiceImpl implements BookService{
 		bookDao.delBookType(category);
 		
 	}
+
+	@Override
+	public void reduceStock(Integer book_id) {
+		bookDao.reduceStock(book_id);
+	}
+
 }

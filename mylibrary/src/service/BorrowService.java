@@ -1,8 +1,10 @@
 package service;
 
-import pojo.Admin;
-import pojo.Bookinfo;
 import pojo.LeadInfo;
+import pojo.PageBean;
+
+import java.util.List;
+import java.util.Map;
 
 /**
 * @author 作者 E-mail:
@@ -13,4 +15,7 @@ public interface BorrowService {
 
 	void lendBook(LeadInfo leadInfo);
 
+    List<LeadInfo> listDisBackBook(PageBean pageBean);
+    int countDisBook(PageBean pageBean);
+    void backBook(Map<String, Object> ret);
 }

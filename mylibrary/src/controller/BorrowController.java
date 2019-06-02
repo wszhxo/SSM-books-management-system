@@ -5,18 +5,23 @@ package controller;
 * 类说明
 */
 
-import javax.servlet.http.HttpSession;
-
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import pojo.Admin;
 import pojo.Bookinfo;
 import pojo.LeadInfo;
+import pojo.PageBean;
 import service.BorrowService;
+
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Controller
 public class BorrowController {
 	@Autowired
@@ -26,11 +31,49 @@ public class BorrowController {
 	public @ResponseBody String borrowBook(Bookinfo bookinfo,HttpSession session) {
 		Admin admin=(Admin) session.getAttribute("admin2");
 		LeadInfo leadInfo=new LeadInfo();
-		leadInfo.setBookinfo(bookinfo);
-		leadInfo.setAdmin(admin);
 		leadInfo.setAdminId(admin.getAdminId());
 		leadInfo.setBook_id(bookinfo.getBook_id());
 		borrowService.lendBook(leadInfo);
+		return "1";
+	}
+	//跳转到读者界面
+	@RequestMapping(value = "/listDisBack")
+	public  String listDisBack() {
+		return "listDisBack";
+	}
+	//跳转到管理员管理未还图书界面
+	@RequestMapping(value = "/listDisBackAdmin")
+	public  String listDisBackAdmin() {
+		return "listDisBackAdmin";
+	}
+	//列出未还图书
+	@RequestMapping(value = "/listDisBackBook", produces = "text/plain;charset=UTF-8")
+	public @ResponseBody String listDisBackBook(
+			@RequestParam(value = "page", defaultValue = "1") Integer page,
+			@RequestParam(value = "limit", defaultValue = "6") Integer limit,
+			@RequestParam(value = "power",defaultValue = "0") Integer power,
+			PageBean pageBean,HttpSession session) {
+		Admin admin=(Admin) session.getAttribute("admin2");
+		//为0说明是读者,1说明是管理员点击未还图书
+		if (power.equals(0))pageBean.setAdminId(admin.getAdminId());
+		List<LeadInfo> leadInfos = borrowService.listDisBackBook(pageBean);
+		JSONObject obj = new JSONObject();
+		// Layui table 组件要求返回的格式
+		obj.put("code", 0);
+		obj.put("msg", "");
+		obj.put("count",borrowService.countDisBook(pageBean));
+		obj.put("data", leadInfos);
+		return obj.toString();
+	}
+	//管理员归还图书
+	@RequestMapping(value = "/backBook")
+	public @ResponseBody String backBook(@RequestParam(value = "reader_id" , defaultValue = "1") Integer reader_id,
+										 @RequestParam(value = "book_id" , defaultValue = "1") Integer book_id) {
+		Map<String, Object> ret = new HashMap<String, Object>();
+		ret.put("reader_id",reader_id);
+		ret.put("book_id",book_id);
+		System.out.println(reader_id+"----"+book_id);
+		borrowService.backBook(ret);
 		return "1";
 	}
 }

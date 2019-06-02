@@ -4,8 +4,7 @@
 	xmlns:aop="http://www.springframework.org/schema/aop" 
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:task="http://www.springframework.org/schema/task"
-	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
 		http://www.springframework.org/schema/mvc 
 		http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd 
@@ -18,8 +17,8 @@
 		http://www.springframework.org/schema/task
    		http://www.springframework.org/schema/task/spring-task-4.0.xsd
 		http://code.alibabatech.com/schema/dubbo        
-		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
-		
+		">
+
 		<!-- 配置扫描 器 -->
 		<context:component-scan base-package="controller"/>
 		<!-- 配置处理器映射器  适配器 -->

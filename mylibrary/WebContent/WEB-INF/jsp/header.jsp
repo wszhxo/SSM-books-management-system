@@ -33,20 +33,14 @@
           <dd><a href="<%=basePath%>library/bookType.action">分类管理</a></dd>
         </dl>
       </li>
-      <li class="layui-nav-item">
-        <a href="javascript:;">读者管理</a>
-        <dl class="layui-nav-child">
-          <dd><a href="<%=basePath%>readerIndex.action">读者列表</a></dd>
-          <dd><a href="">分类管理</a></dd>
-        </dl>
-      </li>
+        <li class="layui-nav-item"><a href="<%=basePath%>readerIndex.action">读者列表</a></li>
 <!--         <li class="layui-nav-item"><a href="">借阅管理</a></li> -->
          <li class="layui-nav-item">
         <a href="javascript:;">借阅管理</a>
         <dl class="layui-nav-child">
-          <dd><a href="">图书借阅</a></dd>
-          <dd><a href="">图书归还</a></dd>
-          <dd><a href="">借阅记录</a></dd>
+          <dd><a href="<%=basePath%>listDisBackAdmin.action">未还记录</a></dd>
+          <dd><a href="">归还记录</a></dd>
+          <dd><a href="">总借阅记录</a></dd>
         </dl>
       </li>
     </ul>

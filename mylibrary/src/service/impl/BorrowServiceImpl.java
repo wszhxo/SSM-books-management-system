@@ -1,15 +1,17 @@
 package service.impl;
 
-import java.util.Calendar;
-import java.util.Date;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import mapper.BookDao;
 import mapper.BorrowDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import pojo.LeadInfo;
+import pojo.PageBean;
 import service.BorrowService;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
 * @author 作者 E-mail:cuber.zhx@qq.com
@@ -37,13 +39,29 @@ public class BorrowServiceImpl implements BorrowService{
 	    //最晚归还时间
 	    Date newdate=cal.getTime();
 		leadInfo.setBack_date(newdate);
-		//设置罚金
-		//返回毫秒
-		//long l=newdate.getTime()-date.getTime();
 		borrowDao.addLead(leadInfo);
 		//使库存-1
-		bookDao.reduceStock();
+		bookDao.reduceStock(leadInfo.getBook_id());
 		
+	}
+
+	@Override
+	public List<LeadInfo> listDisBackBook(PageBean pageBean) {
+		//执行罚金设置的存储过程,再展示
+		borrowDao.addFine();
+		List<LeadInfo> leadInfosbookDao=borrowDao.listDisBackBook(pageBean);
+		return leadInfosbookDao;
+	}
+
+	@Override
+	public int countDisBook(PageBean pageBean) {
+		return borrowDao.countDisBook(pageBean);
+	}
+
+	@Override
+	public void backBook(Map<String, Object> ret) {
+		borrowDao.backBook(ret);
+		System.out.println("执行完了");
 	}
 
 }

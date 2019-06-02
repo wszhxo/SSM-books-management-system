@@ -1,21 +1,20 @@
 package mapper;
 
+import pojo.*;
+
 import java.util.List;
 
-import pojo.Bookinfo;
-import pojo.Category;
-import pojo.PageBean;
-
 public interface BookDao {
-	public List<Bookinfo>  listAllBook(PageBean pageBean);
-	public List<Category> listCategory();
-	public int bookCount(PageBean pageBean);
-	public void addBook(Bookinfo bookinfo);
-	public void updateBook(Bookinfo bookinfo);
-	public void delBook(Integer id);
-	public void updateBookType(Category category);
-	public void addBookType(Category category);
-	public void delBookType(Category category);
+	 List<Bookinfo>  listAllBook(PageBean pageBean);
+	 List<Category> listCategory();
+	 int bookCount(PageBean pageBean);
+	 void addBook(Bookinfo bookinfo);
+	 void updateBook(Bookinfo bookinfo);
+	 void delBook(Integer id);
+	 void updateBookType(Category category);
+	 void addBookType(Category category);
+	 void delBookType(Category category);
 	//减少库存
-	public void reduceStock();
+	 void reduceStock(Integer book_id);
+
 }

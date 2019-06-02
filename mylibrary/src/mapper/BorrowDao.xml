@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 		<result column="lend_date" property="lend_date"/> -->
 <!-- 		<result column="back_date" property="back_date"/> -->
 <!-- 		<result column="state" property="state"/> -->
-<!--   	 	property中是Bookinfo类中的Category变量名 category   --> 
+<!--   	 	property中是Bookinfo类中的Category变量名 category   -->
 <!-- 		<association  javaType="Bookinfo" property="bookinfo"> -->
 <!-- 			<result column="book_id" property="book_id"/> -->
 <!-- 			<result column="name" property="name"/> -->
@@ -30,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 	</resultMap> -->
 
 	<!-- 添加借阅记录 -->
-	<select id="addLead" parameterType="leadInfo" >
+	<select id="addLead" parameterType="LeadInfo" >
 		INSERT into lend_list(
 		book_id,
 		reader_id,
@@ -43,5 +43,53 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{book_id},#{adminId},#{lend_date},#{back_date},#{state},#{fine}
 		)
 	</select>
-	
+	<!-- 借阅记录条数-->
+	<select id="countDisBook" parameterType="PageBean" resultType="Integer">
+		select count(*)
+		from lend_list
+		<if test="adminId!=null and adminId!=''">
+			where reader_id=#{adminId}
+		</if>
+		<if test="currentPage!=null and currentPage!=''">
+			limit #{index}, #{pageSize}
+		</if>
+	</select>
+	<!-- 借阅记录列表-->
+	<select id="listDisBackBook" parameterType="PageBean" resultType="LeadInfo">
+		select a.sernum,
+		a.book_id,
+		a.reader_id as adminId,
+		a.lend_date,
+		a.back_date,
+		a.state,
+		a.fine,
+		b.name as bookName,
+		c.name as adminName
+		from lend_list a
+		LEFT JOIN book_info b
+		on a.book_id=b.book_id
+		LEFT JOIN reader_info c
+		on a.reader_id=c.reader_id
+		<if test="adminId!=null and adminId!=''">
+		where c.reader_id=#{adminId}
+		</if>
+		<if test="rname!=null and rname!=''">
+			where c.name=#{rname}
+		</if>
+		<if test="bname!=null and bname!=''">
+			where b.name =#{bname}
+		</if>
+		<if test="currentPage!=null and currentPage!=''">
+			limit #{index}, #{pageSize}
+		</if>
+
+	</select>
+    <!--  //执行设置罚金的存储过程 -->
+    <update id="addFine" >
+       {call update_conference_status()}
+    </update>
+	<!--归还图书-->
+	<update id="backBook" parameterType="Map">
+			UPDATE lend_list set state=1 where reader_id=#{params.reader_id} and book_id=#{params.book_id}
+    </update>
 </mapper>

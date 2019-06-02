@@ -1,26 +1,18 @@
 package controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpSession;
-
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.ModelAndView;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
+import org.springframework.web.bind.annotation.*;
 import pojo.Bookinfo;
 import pojo.Category;
 import pojo.PageBean;
 import service.BookService;
+
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @SessionAttributes(value={"category"})
@@ -43,17 +35,19 @@ public class BookController {
 	@RequestMapping(value = "/library/findBook")
 	public String findBook(Bookinfo bookinfo,Model model) {
 		model.addAttribute("bookinfo",bookinfo);
+		System.out.println(bookinfo);
 		return "/book/addBook";
 	}
 	//用于编辑按钮的页面跳转
-	@RequestMapping(value = "/library/editBook")
+	@RequestMapping(value = "/library/editBook", produces = "text/plain;charset=UTF-8")
 	public String editBook(Bookinfo bookinfo,Model model) {
 		model.addAttribute("bookinfo",bookinfo);
 		model.addAttribute("code",1);
+		System.out.println(bookinfo);
 		return "/book/addBook";
 	}
 	//修改
-	@RequestMapping(value = "/library/updateBook")
+	@RequestMapping(value = "/library/updateBook", produces = "text/plain;charset=UTF-8")
 	public @ResponseBody String updateBook(Bookinfo bookinfo,Model model) {
 		//用于区分查看和修改
 		bookService.updateBook(bookinfo);

@@ -30,7 +30,7 @@
 	    	<input class="layui-input" name="rname" id="rname" autocomplete="off" placeholder="请输入姓名">
 	    </div>
  		<button class="layui-btn" data-type="reload">搜索</button>
- 		<a class="layui-btn layui-btn-normal" onclick="add();">添加读者</a>
+ 		<a  style="margin-left: 70px"  class="layui-btn layui-btn-normal" onclick="add();">添加读者</a>
   	</div>
 </div>
  
@@ -95,7 +95,7 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
       ,{field: 'birth', title: '生日', width:200, sort: true}
       ,{field: 'address', title: '地址', width: 300}
       ,{field: 'telcode', title: '电话', width: 120}
-      ,{field: 'card_state', title: '读者等级', width: 100}
+      ,{field: 'card_state', title: '读者可借图书', width: 150}
       ,{fixed: 'right', width: 200, align:'center', toolbar: '#barDemo'}
     ]]
       //用于搜索结果重载

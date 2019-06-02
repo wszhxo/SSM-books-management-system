@@ -54,7 +54,12 @@
       <div id="pageDemo"></div>
     </div>
 <script type="text/html" id="barDemo">
-  <a  class="layui-btn layui-btn-danger layui-btn-sm lend" lay-event="lend">借阅</a>
+	<%-- 必须使用 button--%>
+  	<button  class="layui-btn layui-btn-normal layui-btn-sm lend" lay-event="lend">借阅</button>
+<%--	<button class="layui-btn layui-btn-sm lend layui-btn-disabled" lay-event="lend" disabled="disabled">已借阅</button>--%>
+
+
+
 </script>
 <script>
 //JavaScript代码区域
@@ -103,7 +108,6 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
       ,{field: 'pubdate', title: '出版日期', width: 120, sort: true}
       ,{field: 'stock', title: '库存', width: 100}
       ,{field: 'price', title: '价格', width: 100, sort: true}
-     // ,{field: 'introduction', title: '简介', width:150} 
       ,{fixed: 'right', width: 200, align:'center', toolbar: '#barDemo'}
     ]]
       //用于搜索结果重载
@@ -172,8 +176,11 @@ function lend(obj,index,data1){
             	var dom = $('.lend').eq(i);
             	if(dom.hasClass('layui-btn-danger')){
             		dom.removeClass('layui-btn-danger');
-            		dom.addClass('layui-btn-normal');
-            		dom.html('取消借阅');
+            		//变为禁用
+            		dom.addClass('layui-btn-disabled');
+            		//去除点击事件
+					dom.attr("disabled","disabled");
+					dom.html('已借阅');
             	}else{
             		dom.removeClass('layui-btn-normal');
             		dom.addClass('layui-btn-danger');

@@ -40,7 +40,7 @@
 			</div>
 	    </div> 
  		<button class="layui-btn" data-type="reload">搜索</button>
- 		<a class="layui-btn layui-btn-normal" onclick="add();">添加图书</a>
+ 		<a  style="margin-left: 70px" class="layui-btn layui-btn-normal" onclick="add();">添加图书</a>
   	</div>
 </div>
  

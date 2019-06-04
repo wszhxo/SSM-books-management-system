@@ -33,6 +33,12 @@ public class BorrowController {
 		LeadInfo leadInfo=new LeadInfo();
 		leadInfo.setAdminId(admin.getAdminId());
 		leadInfo.setBook_id(bookinfo.getBook_id());
+		//判断库存是否足够
+        if (bookinfo.getStock()==0)return "2";
+		//判断该读者是否已经借过该图书
+        if (borrowService.isLended(leadInfo))return "0";
+        //判断是否达到借书上限
+        if (borrowService.cardState(leadInfo))return "3";
 		borrowService.lendBook(leadInfo);
 		return "1";
 	}
@@ -53,18 +59,27 @@ public class BorrowController {
 			@RequestParam(value = "limit", defaultValue = "6") Integer limit,
 			@RequestParam(value = "power",defaultValue = "0") Integer power,
 			PageBean pageBean,HttpSession session) {
+		pageBean.setCurrentPage(page);
+		pageBean.setPageSize(limit);
 		Admin admin=(Admin) session.getAttribute("admin2");
 		//为0说明是读者,1说明是管理员点击未还图书
-		if (power.equals(0))pageBean.setAdminId(admin.getAdminId());
+		if (power.equals(0)){
+		    //读者号
+		    pageBean.setAdminId(admin.getAdminId());
+		    //读者姓名
+		    pageBean.setRname(admin.getName());
+		}
 		List<LeadInfo> leadInfos = borrowService.listDisBackBook(pageBean);
+		PageBean pb=borrowService.getPb();
 		JSONObject obj = new JSONObject();
 		// Layui table 组件要求返回的格式
 		obj.put("code", 0);
 		obj.put("msg", "");
-		obj.put("count",borrowService.countDisBook(pageBean));
+		obj.put("count",pb.getTotalCount());
 		obj.put("data", leadInfos);
 		return obj.toString();
 	}
+
 	//管理员归还图书
 	@RequestMapping(value = "/backBook")
 	public @ResponseBody String backBook(@RequestParam(value = "reader_id" , defaultValue = "1") Integer reader_id,
@@ -72,7 +87,6 @@ public class BorrowController {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		ret.put("reader_id",reader_id);
 		ret.put("book_id",book_id);
-		System.out.println(reader_id+"----"+book_id);
 		borrowService.backBook(ret);
 		return "1";
 	}

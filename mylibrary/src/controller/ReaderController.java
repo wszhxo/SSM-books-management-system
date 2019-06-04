@@ -1,18 +1,17 @@
 package controller;
 
-import java.util.List;
-
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import net.sf.json.JSONObject;
 import pojo.PageBean;
 import pojo.Readers;
 import service.ReaderService;
+
+import java.util.List;
 
 
 /**
@@ -58,7 +57,6 @@ public class ReaderController {
 	@RequestMapping(value = "/library/updateReader")
 	public @ResponseBody String updatereader(Readers readerinfo,Model model) {
 		//用于区分查看和修改
-		System.out.println(readerinfo);
 		readerService.updateReader(readerinfo);
 		return "1";
 	}
@@ -88,7 +86,6 @@ public class ReaderController {
 	//添加
 	@RequestMapping(value = "library/submitAddReader")
 	public @ResponseBody String submitAddreader(Readers readerinfo) {
-		System.out.println(readerinfo);
 		 readerService.addReader(readerinfo);
 		 return "1";
 	}
@@ -102,9 +99,7 @@ public class ReaderController {
 	//注册是查询是否存在该读者
 	@RequestMapping(value = "library/checkUser")
 	public  @ResponseBody String checkreader( Integer reader_id) {
-		System.out.println(reader_id);
 		 int a=readerService.checkReader(reader_id);
-		 System.out.println(a);
 		 return a>0?"0":"1";
 	}
 }

@@ -18,7 +18,7 @@
 </head>
 <body>
 <div class="login-main">
-    <header class="layui-elip" style="width: 82%">注册页</header>
+    <header class="layui-elip" style="width: 82%;;margin-top:40px">注册页</header>
     <!-- 表单选项 -->
     <form class="layui-form" action="<%=basePath%>library/submitAddReader.action" method="post">
         <div class="layui-input-inline">

@@ -22,7 +22,6 @@ public class Test {
 		pageBean.setCurrentPage(1);
 		pageBean.setPageSize(3);
 		int a=rs.readerCount(pageBean);
-		System.out.println(a);
 	}
 	
 	@org.junit.Test
@@ -32,6 +31,5 @@ public class Test {
 		pageBean.setCurrentPage(1);
 		pageBean.setPageSize(3);
 		int a=rs.bookCount(pageBean);
-		System.out.println(a);
 	}
 }

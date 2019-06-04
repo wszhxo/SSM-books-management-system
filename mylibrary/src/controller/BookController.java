@@ -35,7 +35,6 @@ public class BookController {
 	@RequestMapping(value = "/library/findBook")
 	public String findBook(Bookinfo bookinfo,Model model) {
 		model.addAttribute("bookinfo",bookinfo);
-		System.out.println(bookinfo);
 		return "/book/addBook";
 	}
 	//用于编辑按钮的页面跳转
@@ -43,7 +42,6 @@ public class BookController {
 	public String editBook(Bookinfo bookinfo,Model model) {
 		model.addAttribute("bookinfo",bookinfo);
 		model.addAttribute("code",1);
-		System.out.println(bookinfo);
 		return "/book/addBook";
 	}
 	//修改
@@ -51,7 +49,6 @@ public class BookController {
 	public @ResponseBody String updateBook(Bookinfo bookinfo,Model model) {
 		//用于区分查看和修改
 		bookService.updateBook(bookinfo);
-		System.out.println(bookinfo);
 		return "1";
 	}
 	
@@ -81,7 +78,6 @@ public class BookController {
 	//添加
 	@RequestMapping(value = "library/submitAddBook")
 	public @ResponseBody String submitAddBook(Bookinfo bookinfo) {
-		System.out.println(bookinfo);
 		 bookService.addBook(bookinfo);
 		 return "1";
 	}
@@ -116,7 +112,6 @@ public class BookController {
 	//添加类别
 	@RequestMapping(value = "/library/addBookType")
 	public @ResponseBody String addBookType(@ModelAttribute(value="ctCategory") Category ctCategory) {
-		System.out.println(ctCategory);
 		bookService.addBookType(ctCategory);
 		return "1";
 	}

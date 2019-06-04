@@ -38,6 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		a.stock,
 		a.state from book_info a left join class_info b on a.class_id=b.cid
 		<where>
+
 		<if test="bname!=null and bname!=''">
     	and a.name like '%${bname}%'
 		</if>

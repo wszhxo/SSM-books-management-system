@@ -13,4 +13,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select reader_id as adminId,password,name ,card_state as access 
 		FROM reader_info where reader_id=#{adminId}  and password=#{password} 
 	</select>
+	<!-- 读者修改密码-->
+	<update id="alterpwd" parameterType="Admin" >
+		update reader_info set password=#{password} where reader_id=#{adminId}
+	</update>
+	<!-- 管理员修改密码-->
+	<update id="alterpwdAdmin" parameterType="Admin" >
+		update admin set password=#{password} where admin_id=#{adminId}
+	</update>
 </mapper>

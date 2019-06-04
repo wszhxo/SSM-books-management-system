@@ -16,18 +16,26 @@ public class PageBean {
 	private String author;// 作者
 	private String cname;// 类别
 	//读者搜索条件
-	private String reader_id;// 作者
-	private String rname;// 类别
+	private String reader_id;// 读者
+	private String rname;// 读者名字
 	private Integer adminId;
+
+	//借阅搜索条件
+	private Integer state;//归还状态
+
 	public PageBean() {
 
 	}
+	public Integer getState() {
+		return state;
+	}
 
-
+	public void setState(Integer state) {
+		this.state = state;
+	}
 	public Integer getAdminId() {
 		return adminId;
 	}
-
 	public void setAdminId(Integer adminId) {
 		this.adminId = adminId;
 	}
@@ -157,6 +165,7 @@ public class PageBean {
 				", reader_id='" + reader_id + '\'' +
 				", rname='" + rname + '\'' +
 				", adminId=" + adminId +
+				", state=" + state +
 				'}';
 	}
 }

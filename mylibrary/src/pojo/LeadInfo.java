@@ -13,7 +13,7 @@ public class LeadInfo implements Serializable {
     private Date lend_date;//借阅日期
     private Date back_date;//归还日期
     private Double fine;//罚款
-    private Integer state = 0;//归还状态
+    private Integer state=2;//归还状态
 
     public Integer getState() {
         return state;

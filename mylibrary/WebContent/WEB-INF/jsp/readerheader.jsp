@@ -27,8 +27,8 @@
     <!-- 头部区域（可配合layui已有的水平导航） -->
     <ul class="layui-nav layui-layout-left">
         <li class="layui-nav-item"><a href="<%=basePath%>frontIndex.action">图书列表</a></li>
-        <li class="layui-nav-item"><a href="<%=basePath%>listDisBack.action">未还图书</a></li>
-         <li class="layui-nav-item"><a href="">已还图书</a></li>
+        <li class="layui-nav-item"><a href="<%=basePath%>listDisBack.action">借阅记录</a></li>
+        <li class="layui-nav-item"><a onclick="alterPwd();">修改密码</a></li>
     </ul>
     <ul class="layui-nav layui-layout-right">
       <li class="layui-nav-item">
@@ -36,17 +36,25 @@
           <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
         ${admin2.name }
         </a>
-        <dl class="layui-nav-child">
-          <dd><a href="">基本资料</a></dd>
-          <dd><a href="">修改密码</a></dd>
-        </dl>
+
       </li>
-      <li class="layui-nav-item"><a href="">退了</a></li>
+        <li class="layui-nav-item"><a href="<%=basePath%>loginout.action">退了</a></li>
     </ul>
   </div>
-  
-  
-    <!-- 内容主体区域 -->
+
     <div style="padding: 15px;">
+        <script>
+
+            function alterPwd(){//添加
+                layer.open({
+                    type: 2,
+                    title: '修改密码',
+                    skin: 'layui-layer-demo', //加上边框
+                    area: ['500px', '300px'], //宽高
+                    content: '<%=basePath%>toAlterpwdPage.action'
+                });
+            }
+
+        </script>
 </body>
 </html>

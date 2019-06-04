@@ -21,9 +21,10 @@ import java.util.Map;
 @Service
 public class BorrowServiceImpl implements BorrowService{
 	@Autowired
-	BorrowDao borrowDao;
+	private BorrowDao borrowDao;
 	@Autowired
-	BookDao bookDao;
+	private BookDao bookDao;
+	private PageBean pb;
 	@Override
 	public void lendBook(LeadInfo leadInfo) {
 		//添加借阅记录
@@ -49,7 +50,16 @@ public class BorrowServiceImpl implements BorrowService{
 	public List<LeadInfo> listDisBackBook(PageBean pageBean) {
 		//执行罚金设置的存储过程,再展示
 		borrowDao.addFine();
-		List<LeadInfo> leadInfosbookDao=borrowDao.listDisBackBook(pageBean);
+		//获得总页数
+		int borrowcount=countDisBook(pageBean);
+		//设置分页相关属性数据
+		PageBean pageBean2=new PageBean(pageBean.getCurrentPage(),borrowcount,pageBean.getPageSize());
+		pageBean2.setBname(pageBean.getBname());
+		pageBean2.setRname(pageBean.getRname());
+		pageBean2.setState(pageBean.getState());
+		pageBean2.setIndex(pageBean.getIndex());
+		pb=pageBean2;
+		List<LeadInfo> leadInfosbookDao=borrowDao.listDisBackBook(pageBean2);
 		return leadInfosbookDao;
 	}
 
@@ -61,7 +71,21 @@ public class BorrowServiceImpl implements BorrowService{
 	@Override
 	public void backBook(Map<String, Object> ret) {
 		borrowDao.backBook(ret);
-		System.out.println("执行完了");
 	}
 
+    @Override
+    public Boolean isLended(LeadInfo leadInfo) {
+
+        return borrowDao.isLended(leadInfo)>0?true:false;
+    }
+
+	@Override
+	public Boolean cardState(LeadInfo leadInfo) {
+		return borrowDao.cardState(leadInfo)-borrowDao.disBack(leadInfo)>0?true:false;
+	}
+
+	@Override
+	public PageBean getPb() {
+		return pb;
+	}
 }

@@ -21,4 +21,9 @@ public interface BorrowDao {
     void addFine();
     //归还图书
     void backBook(@Param("params") Map<String, Object> ret);
+    //是否已经借过
+    Integer isLended(LeadInfo leadInfo);
+    Integer cardState(LeadInfo leadInfo);
+    Integer disBack(LeadInfo leadInfo);
+
 }

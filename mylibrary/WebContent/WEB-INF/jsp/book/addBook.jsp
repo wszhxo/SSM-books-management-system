@@ -145,6 +145,14 @@ laydate.render({
         var $ = layui.jquery;
         //添加ajax表单提交
         form.on('submit(addbook)',function (data) {
+            if(!new RegExp("^[0-9]*$").test(data.field.price)){
+                layer.msg("价格必须是数字");
+                return false;
+            }
+            if(!new RegExp("^[0-9]*$").test(data.field.stock)){
+                layer.msg("库存必须是数字!");
+                return false;
+            }
             $.ajax({
                 url:'<%=basePath%>library/submitAddBook.action',
                	data:data.field,
@@ -164,10 +172,18 @@ laydate.render({
             })
             return false;
         }),
- 
-        
+
       //修改ajax表单提交
         form.on('submit(updatebook)',function (data) {
+            if(!new RegExp("^[0-9]*$").test(data.field.price)){
+                layer.msg("价格必须是数字");
+                return false;
+            }
+            if(!new RegExp("^[0-9]*$").test(data.field.stock)){
+                layer.msg("库存必须是数字!");
+                return false;
+            }
+
             $.ajax({
                 url:'<%=basePath%>library/updateBook.action',
                	data:data.field,

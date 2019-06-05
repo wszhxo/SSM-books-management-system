@@ -30,7 +30,7 @@
  <div class="layui-form-item">
  
     <div class="layui-inline">
-      <label class="layui-form-label">借阅号(学号)：</label>
+      <label class="layui-form-label">借阅号：</label>
       <div class="layui-input-inline">
       <input type="text" name="reader_id"  value="${readerinfo.reader_id}" lay-verify="required" autocomplete="off" class="layui-input">
       </div>
@@ -69,7 +69,7 @@
       </div>
     </div>
 	 <div class="layui-inline">
-      <label class="layui-form-label">读者等级：</label>
+      <label class="layui-form-label">可借图书：</label>
       <div class="layui-input-inline">
         <input type="text" name="card_state" lay-verify="required" value="${readerinfo.card_state}" autocomplete="off" class="layui-input">
       </div>
@@ -113,6 +113,15 @@ laydate.render({
         var $ = layui.jquery;
         //添加ajax表单提交
         form.on('submit(addreader)',function (data) {
+
+            if(!new RegExp("^1\\d{10}$").test(data.field.telcode)){
+                layer.msg("请输入11位电话号码");
+                return false;
+            }
+            if(!new RegExp("^[0-9]*$").test(data.field.card_state)){
+                layer.msg("可借图书必须为数字!");
+                return false;
+            }
             $.ajax({
                 url:'<%=basePath%>library/submitAddReader.action',
                	data:data.field,
@@ -132,10 +141,19 @@ laydate.render({
             })
             return false;
         }),
- 
-        
+
+
       //修改ajax表单提交
         form.on('submit(updatereader)',function (data) {
+
+            if(!new RegExp("^1\\d{10}$").test(data.field.telcode)){
+                layer.msg("请输入11位电话号码");
+                return false;
+            }
+            if(!new RegExp("^[0-9]*$").test(data.field.card_state)){
+                layer.msg("可借图书必须为数字!");
+                return false;
+            }
             $.ajax({
                 url:'<%=basePath%>library/updateReader.action',
                	data:data.field,

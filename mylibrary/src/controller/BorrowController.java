@@ -38,7 +38,7 @@ public class BorrowController {
 		//判断该读者是否已经借过该图书
         if (borrowService.isLended(leadInfo))return "0";
         //判断是否达到借书上限
-        if (borrowService.cardState(leadInfo))return "3";
+        if (!borrowService.cardState(leadInfo))return "3";
 		borrowService.lendBook(leadInfo);
 		return "1";
 	}

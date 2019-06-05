@@ -141,11 +141,11 @@ laydate.render({
             })
  
         });
- 
+
         // you code ...
         // 为密码添加正则验证
         $('#pwd').blur(function() {
-                var reg = /^[\w]{6,12}$/;
+                var reg = /^[\w]{1,12}$/;
                 if(!($('#pwd').val().match(reg))){
                     //layer.msg('请输入合法密码');
                     $('#pwr').removeAttr('hidden');
@@ -172,6 +172,15 @@ laydate.render({
         //
         //添加表单监听事件,提交注册信息
         form.on('submit(sub)', function(data) {
+
+            if(!new RegExp("^1\\d{10}$").test(data.field.telcode)){
+                layer.msg("请输入11位电话号码");
+                return false;
+            }
+            if(!new RegExp("^[0-9]*$").test(data.field.reader_id)){
+                layer.msg("学号为数字哦!");
+                return false;
+            }
             $.ajax({
                 url:'<%=basePath%>library/submitAddReader.action',
                 data:data.field,

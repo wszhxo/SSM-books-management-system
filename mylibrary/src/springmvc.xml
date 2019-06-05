@@ -33,5 +33,11 @@
 			<property name="prefix" value="/WEB-INF/jsp/"/>
 			<property name="suffix" value=".jsp"/>
 		</bean>
-		
+	<mvc:interceptors>
+		<!--登录拦截器-->
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="interceptor.LoginInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
 </beans>
